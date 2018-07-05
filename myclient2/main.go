@@ -72,7 +72,6 @@ func main() {
 	if *sendgreet {
 		// Greet with the server.
 		log.Println("********** Send Greet Request **********")
-		*id = 10
 		greetreply, err := c.Greet(context.Background(), &pb.GreetRequest{Id: *id, Ip: &ip, Message: *greetmessage})
 		// Request failed
 		if greetreply == nil && err != nil {
