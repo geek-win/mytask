@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package communication;
+
+import "github.com/lyft/protoc-gen-validate/validate/validate.proto";
+
+// The communication service definition.
+service Communication{
+    // Sends a greeting.
+    rpc Greet (GreetRequest) returns (GreetReply) {}
+
+    // Login email.
+    rpc Login (AccessRequest) returns (AccessReply) {}
+}
+
+// IP address.
+message IP {
+    string addr = 1 [(validate.rules).string.ip = true]; //format: xx.xx.xx.xx
+    string name = 2 [(validate.rules).string.hostname = true];
+    int32 port = 3 [(validate.rules).int32 = {gte: 1024, lte: 65535}];
+}
+
+// Greet request contains id, ip and message.
+message GreetRequest {
+    uint64 id = 1 [(validate.rules).uint64.gt = 1000];
+    IP ip = 2 [(validate.rules).message.required = true];
+    string message = 3 [(validate.rules).string = {min_len: 0, max_len: 65535}];
+}
+
+// Greet reply contains message and ip.
+message GreetReply {
+    string message = 1 [(validate.rules).string = {min_len: 0, max_len: 65535}];
+    IP ip = 2 [(validate.rules).message.required = true];
+}
+
+// Email login.
+message AccessRequest {
+    IP ip = 1 [(validate.rules).message.required = true]; //ip cannot be unset
+    bool isCN = 2; // service in China or not
+    Email email = 3 [(validate.rules).message.required = true];
+
+    message Email {
+        string email = 1 [(validate.rules).string.email = true];
+        string pwd = 2 [(validate.rules).string = {min_len: 0, max_len: 16}];
+    }
+}
+
+// The reply to client access.
+message AccessReply {
+    IP ip = 1 [(validate.rules).message.required = true];
+    string message = 2 [(validate.rules).string = {min_len: 0, max_len: 65535}];
+}
