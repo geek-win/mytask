@@ -135,35 +135,183 @@ func (m *GreetRequest) Validate() error {
 		return nil
 	}
 
-	if m.GetId() <= 1000 {
-		return GreetRequestValidationError{
-			Field:  "Id",
-			Reason: "value must be greater than 1000",
+	if m.GetDoublenum().Valid {
+
+		if m.GetDoublenum().Valid {
+
 		}
+
+		if m.GetDoublenum().Valid {
+
+			if m.GetDoublenum().Value <= 10 {
+				return GreetRequestValidationError{
+					Field:  "Doublenum",
+					Reason: "value must be greater than 10",
+				}
+			}
+
+		}
+
+		if m.GetDoublenum().Valid {
+
+		}
+
 	}
 
-	if m.GetIp() == nil {
-		return GreetRequestValidationError{
-			Field:  "Ip",
-			Reason: "value is required",
+	if m.GetFloatnum().Valid {
+
+		if m.GetFloatnum().Valid {
+
 		}
+
+		if m.GetFloatnum().Valid {
+
+			if m.GetFloatnum().Value <= 10 {
+				return GreetRequestValidationError{
+					Field:  "Floatnum",
+					Reason: "value must be greater than 10",
+				}
+			}
+
+		}
+
+		if m.GetFloatnum().Valid {
+
+		}
+
 	}
 
-	if v, ok := interface{}(m.GetIp()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
+	if m.GetInt64Num().Valid {
+
+		if m.GetInt64Num().Valid {
+
+		}
+
+		if m.GetInt64Num().Valid {
+
+			if m.GetInt64Num().Value <= 10 {
+				return GreetRequestValidationError{
+					Field:  "Int64Num",
+					Reason: "value must be greater than 10",
+				}
+			}
+
+		}
+
+		if m.GetInt64Num().Valid {
+
+		}
+
+	}
+
+	if m.GetUint64Num().Valid {
+
+		if m.GetUint64Num().Valid {
+
+		}
+
+		if m.GetUint64Num().Valid {
+
+			if m.GetUint64Num().Value <= 10 {
+				return GreetRequestValidationError{
+					Field:  "Uint64Num",
+					Reason: "value must be greater than 10",
+				}
+			}
+
+		}
+
+		if m.GetUint64Num().Valid {
+
+		}
+
+	}
+
+	if m.GetInt32Num().Valid {
+
+		if m.GetInt32Num().Valid {
+
+		}
+
+		if m.GetInt32Num().Valid {
+
+			if m.GetInt32Num().Value <= 10 {
+				return GreetRequestValidationError{
+					Field:  "Int32Num",
+					Reason: "value must be greater than 10",
+				}
+			}
+
+		}
+
+		if m.GetInt32Num().Valid {
+
+		}
+
+	}
+
+	if m.GetUint32Num().Valid {
+
+		if m.GetUint32Num().Valid {
+
+		}
+
+		if m.GetUint32Num().Valid {
+
+			if m.GetUint32Num().Value <= 10 {
+				return GreetRequestValidationError{
+					Field:  "Uint32Num",
+					Reason: "value must be greater than 10",
+				}
+			}
+
+		}
+
+		if m.GetUint32Num().Valid {
+
+		}
+
+	}
+
+	if m.GetStr().Valid {
+
+		if m.GetStr().Valid {
+
+		}
+
+		if m.GetStr().Valid {
+
+		}
+
+		if utf8.RuneCountInString(m.GetStr().Value) < 2 {
 			return GreetRequestValidationError{
-				Field:  "Ip",
-				Reason: "embedded message failed validation",
-				Cause:  err,
+				Field:  "Str",
+				Reason: "value length must be at least 2 runes",
 			}
 		}
+
 	}
 
-	if l := utf8.RuneCountInString(m.GetMessage()); l < 0 || l > 65535 {
-		return GreetRequestValidationError{
-			Field:  "Message",
-			Reason: "value length must be between 0 and 65535 runes, inclusive",
+	if m.GetBo().Valid {
+
+		if m.GetBo().Value != true {
+			return GreetRequestValidationError{
+				Field:  "Bo",
+				Reason: "value must equal true",
+			}
 		}
+
+	}
+
+	if m.GetB().Valid {
+
+		if !bytes.HasPrefix(m.GetB().Value, []uint8{0x68, 0x61, 0x68, 0x61}) {
+			return GreetRequestValidationError{
+				Field:  "B",
+				Reason: "value does not have prefix \"\\x68\\x61\\x68\\x61\"",
+			}
+		}
+
 	}
 
 	return nil

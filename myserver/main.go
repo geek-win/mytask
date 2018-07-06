@@ -40,7 +40,8 @@ func (s *server) Greet(ctxx context.Context, in *pb.GreetRequest) (*pb.GreetRepl
 
 	// Print GreetRequest
 	s.printGreetRequest(in)
-	return &pb.GreetReply{Ip: &ip, Message: in.GetIp().GetName() + "! Hello! Connect successfully!"}, nil
+	//return &pb.GreetReply{Ip: &ip, Message: in.GetIp().GetName() + "! Hello! Connect successfully!"}, nil
+	return &pb.GreetReply{Ip: &ip, Message: "Hello"}, nil
 }
 
 func (s *server) Login(ctx context.Context, in *pb.AccessRequest) (*pb.AccessReply, error) {
@@ -59,9 +60,21 @@ func (s *server) Login(ctx context.Context, in *pb.AccessRequest) (*pb.AccessRep
 // Print GreetRequest
 func (s *server) printGreetRequest(in *pb.GreetRequest) {
 	log.Println("~~~~~~~~~ Receive Greet Request ~~~~~~~~~")
-	fmt.Println("Request from: ", in.GetIp().GetAddr(), ":", in.GetIp().GetPort(), in.GetIp().GetName())
-	fmt.Println("ID: ", in.GetId())
-	fmt.Println("Message: ", in.GetMessage())
+	/*
+		fmt.Println("Request from: ", in.GetIp().GetAddr(), ":", in.GetIp().GetPort(), in.GetIp().GetName())
+		fmt.Println("ID: ", in.GetId())
+		fmt.Println("Message: ", in.GetMessage())
+		fmt.Println("Num: wheel.Double: ", in.Num.Value)
+	*/
+	fmt.Println("doublenum: ", in.Doublenum.Value)
+	fmt.Println("floatnum: ", in.Floatnum.Value)
+	fmt.Println("int64num: ", in.Int64Num.Value)
+	fmt.Println("uint64num: ", in.Uint64Num.Value)
+	fmt.Println("int32num: ", in.Int32Num.Value)
+	fmt.Println("uint32num: ", in.Uint32Num.Value)
+	fmt.Println("str: ", in.Str.Value)
+	fmt.Println("bytes: ", string(in.B.Value))
+	fmt.Println("bool: ", in.Bo.Value)
 }
 
 // Print AccessRequest

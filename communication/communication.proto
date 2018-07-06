@@ -3,6 +3,7 @@ syntax = "proto3";
 package communication;
 
 import "github.com/lyft/protoc-gen-validate/validate/validate.proto";
+import "wtypes/types.proto";
 
 // The communication service definition.
 service Communication{
@@ -22,9 +23,22 @@ message IP {
 
 // Greet request contains id, ip and message.
 message GreetRequest {
-    uint64 id = 1 [(validate.rules).uint64.gt = 1000];
+    /*
+    wtypes.Int64 id = 1 [(validate.rules).uint64.gt = 1000];
     IP ip = 2 [(validate.rules).message.required = true];
     string message = 3 [(validate.rules).string = {min_len: 0, max_len: 65535}];
+    // try Double
+    wtypes.Double num = 4 [(validate.rules).wdouble.gt = 10];
+    */
+    wtypes.Double doublenum = 1[(validate.rules).wdouble.gt = 10];
+    wtypes.Float floatnum = 2[(validate.rules).wfloat.gt = 10];
+    wtypes.Int64 int64num = 3[(validate.rules).wint64.gt = 10];
+    wtypes.UInt64 uint64num = 4[(validate.rules).wuint64.gt = 10];
+    wtypes.Int32 int32num = 5[(validate.rules).wint32.gt = 10];
+    wtypes.UInt32 uint32num = 6[(validate.rules).wuint32.gt = 10];
+    wtypes.String str = 7[(validate.rules).wstring.min_len = 2];
+    wtypes.Bool bo = 8[(validate.rules).wbool.const = true];
+    wtypes.Bytes b = 9[(validate.rules).wbytes.prefix = "haha"];
 }
 
 // Greet reply contains message and ip.
